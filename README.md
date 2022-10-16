@@ -27,3 +27,20 @@
 
 ##### 테이블 설계
 <img src="/src/main/resources/static/images/table.png" width="450px;" height="350px;">
+
+
+#### 어플리케이션 아키텍처
+##### 계층형 구조 사용
+- controller, web : 웹 계층
+- service : 비즈니스 로직, 트랜잭션 처리
+- repository : JPA를 직접 사용하는 계층, 엔티티 매니저 사용
+- domain : 엔티티가 모여 있는 계층, 모든 계층에서 사용
+
+
+##### 패키지 구조
+- jpabook.jpashop
+  - domain
+  - exception
+  - repository
+  - service
+  - web
