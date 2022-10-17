@@ -1,8 +1,7 @@
 package jpabook.jpashop.domain;
 
 import jpabook.jpashop.domain.item.Item;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,7 +11,9 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
-@Setter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class Category {
     @Id
     @GeneratedValue
@@ -38,5 +39,9 @@ public class Category {
     public void addChildCategory(Category child) {
         this.child.add(child);
         child.setParent(this);
+    }
+
+    private void setParent(Category parent) {
+        this.parent = parent;
     }
 }

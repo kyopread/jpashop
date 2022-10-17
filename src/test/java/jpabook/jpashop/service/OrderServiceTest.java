@@ -86,18 +86,21 @@ class OrderServiceTest {
     }
 
     private Member createMember() {
-        Member member = new Member();
-        member.setName("회원1");
-        member.setAddress(new Address("서울", "강가", "123-123"));
+        Member member = Member.builder()
+                .name("kim")
+                .address(new Address("대전", "둔산동", "123-123"))
+                .build();
         em.persist(member);
         return member;
     }
 
     private Book createBook(String name, int price, int stockQuantity) {
-        Book book = new Book();
-        book.setName(name);
-        book.setPrice(price);
-        book.setStockQuantity(stockQuantity);
+        Book book = Book.builder()
+                .name(name)
+                .price(price)
+                .stockQuantity(stockQuantity)
+                .build();
+
         em.persist(book);
         return book;
     }

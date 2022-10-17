@@ -1,7 +1,6 @@
 package jpabook.jpashop.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -9,7 +8,9 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
-@Setter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class Delivery {
     @Id
     @GeneratedValue
@@ -24,4 +25,8 @@ public class Delivery {
 
     @Enumerated(EnumType.STRING)
     private DeliveryStatus status; // READY, COMP
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
 }

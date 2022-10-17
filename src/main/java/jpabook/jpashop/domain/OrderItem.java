@@ -1,10 +1,7 @@
 package jpabook.jpashop.domain;
 
 import jpabook.jpashop.domain.item.Item;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -12,8 +9,9 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
-@Setter
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class OrderItem {
     @Id
     @GeneratedValue
@@ -33,13 +31,13 @@ public class OrderItem {
 
     // == 생성 메서드 == //
     public static OrderItem createOrderItem(Item item, int orderPrice, int count) {
-        OrderItem orderItem = new OrderItem();
-        orderItem.setItem(item);
-        orderItem.setOrderPrice(orderPrice);
-        orderItem.setCount(count);
-
         item.removeStock(count);
-        return orderItem;
+
+        return OrderItem.builder()
+                .item(item)
+                .orderPrice(orderPrice)
+                .count(count)
+                .build();
     }
 
     // == 비즈니스 로직 == //
@@ -54,5 +52,9 @@ public class OrderItem {
      */
     public int getTotalPrice() {
         return getOrderPrice() * getCount();
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 }
