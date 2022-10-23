@@ -1,6 +1,7 @@
 package jpabook.jpashop.domain;
 
 import lombok.*;
+import org.aspectj.weaver.ast.Or;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
