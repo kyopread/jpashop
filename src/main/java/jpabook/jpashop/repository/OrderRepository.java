@@ -99,5 +99,36 @@ public class OrderRepository {
                         "join fetch o.delivery d", Order.class
         ).getResultList();
     }
+
+    public List<Order> findAllWithItem() {
+        return em.createQuery("" +
+                "select distinct o from Order o " + // distinct : order가 같은 값이면 중복 제거
+                "join fetch o.member m " +
+                "join fetch o.delivery d " +
+                "join fetch o.orderItems oi " +
+                "join fetch oi.item i", Order.class)
+            .getResultList();
+        // 치명적인 단점으로 페이징 불가능
+        // 어플리케이션 메모리 내에서 페이징 처리를 한다.
+        // 컬렉션 페치 조인은 1개만 사용할 수 있다. 컬렉션 둘 이상에 페치 조인을 사용하면 안된다.
+        // 데이터가 부정합하게 조회될 수 있기 때문.
+    }
+
+    public List<Order> findAllWithMemberDelivery(int offset, int limit) {
+/*        return em.createQuery(
+                        "select o from Order o", Order.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();*/
+        // xxToOne 관계는 미리 fetch Join으로 잡는게 좋다.
+
+        return em.createQuery(
+                        "select o from Order o " +
+                                "join fetch o.member m " +
+                                "join fetch o.delivery d", Order.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
 }
 
