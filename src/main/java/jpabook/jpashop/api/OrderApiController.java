@@ -75,6 +75,7 @@ public class OrderApiController {
         List<OrderDto> collect = orders.stream()
                 .map(OrderDto::new)
                 .collect(Collectors.toList());
+        // default_batch_fetch_size 이용해서 item들까지 가져온다.
 
         return collect;
     }
@@ -104,6 +105,16 @@ public class OrderApiController {
         // 애플리케이션에서 추가 작업이 크다.
         // 페이징 불가능
     }
+
+    // 권장 순서
+    // 1. 엔티티 조회 방식으로 우선 접근
+    // - 페치조인으로 쿼리 수 최적화
+    // - 컬렉션 최적화
+    // 페이징 필요하면 batch size, 페이징 필요 x 페치 조인 사용
+    // 2. DTO 조회 방식 사용 / new dto~~~
+    // 3. NativeSQL or Spring JdbcTemplate 사용
+
+    // 그렇지만 QueryDsl 을 쓰면 더 쉬워진다.
 
     @Getter
     static class OrderDto {
