@@ -14,6 +14,8 @@ spring:
         format_sql: true
         default_batch_fetch_size: 100
 # 컬렉션과 관련된 In 쿼리들을 다 가져온다. maximum 1000
+#    open-in-view: false
+# false : 트랜잭션 내에서만 db 커넥션
 
 logging.level:
   org.hibernate.SQL: debug
